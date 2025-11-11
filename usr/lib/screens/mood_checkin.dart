@@ -17,9 +17,16 @@ class _MoodCheckInScreenState extends State<MoodCheckInScreen> {
   final Map<String, String> _moods = {
     'happy': '😊',
     'calm': '😌',
+    'excited': '🤩',
+    'grateful': '🙏',
     'neutral': '😐',
+    'tired': '😴',
+    'stressed': '😤',
     'sad': '😢',
     'anxious': '😰',
+    'overwhelmed': '😵',
+    'angry': '😠',
+    'lonely': '😔',
   };
 
   @override
@@ -51,45 +58,56 @@ class _MoodCheckInScreenState extends State<MoodCheckInScreen> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: _moods.entries.map((entry) {
-                  return GestureDetector(
-                    onTap: () => setState(() => _selectedMood = entry.key),
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: _selectedMood == entry.key
-                            ? Colors.deepPurple.shade200
-                            : Colors.white.withOpacity(0.8),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Text(entry.value, style: const TextStyle(fontSize: 30)),
-                          const SizedBox(height: 5),
-                          Text(
-                            entry.key,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: _selectedMood == entry.key ? Colors.white : Colors.black,
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 1.0,
+                  ),
+                  itemCount: _moods.length,
+                  itemBuilder: (context, index) {
+                    final entry = _moods.entries.elementAt(index);
+                    return GestureDetector(
+                      onTap: () => setState(() => _selectedMood = entry.key),
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: _selectedMood == entry.key
+                              ? Colors.deepPurple.shade200
+                              : Colors.white.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(entry.value, style: const TextStyle(fontSize: 28)),
+                            const SizedBox(height: 5),
+                            Text(
+                              entry.key,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: _selectedMood == entry.key ? Colors.white : Colors.black,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
+                    );
+                  },
+                ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               const Text(
                 'Rate your energy level (1-5)',
                 style: TextStyle(fontSize: 18),
@@ -102,7 +120,7 @@ class _MoodCheckInScreenState extends State<MoodCheckInScreen> {
                 label: _rating.toString(),
                 onChanged: (value) => setState(() => _rating = value.toInt()),
               ),
-              const Spacer(),
+              const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
                   onPressed: _selectedMood != null ? _saveMood : null,
