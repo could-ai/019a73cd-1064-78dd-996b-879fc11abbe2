@@ -75,7 +75,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> with TickerProviderStat
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.lavender.shade100,
+              const Color(0xFFE6E6FA),
               Colors.blue.shade100,
             ],
             begin: Alignment.topCenter,

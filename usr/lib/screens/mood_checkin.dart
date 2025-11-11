@@ -34,7 +34,7 @@ class _MoodCheckInScreenState extends State<MoodCheckInScreen> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.mintAccent.shade100.withOpacity(0.5),
+              const Color(0xFFB2F5EA).withOpacity(0.5),
               Colors.blue.shade100.withOpacity(0.5),
             ],
             begin: Alignment.topCenter,

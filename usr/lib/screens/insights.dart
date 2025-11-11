@@ -32,7 +32,7 @@ class InsightsScreen extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.mintAccent.shade100.withOpacity(0.5),
+              const Color(0xFFB2F5EA).withOpacity(0.5),
               Colors.blue.shade100.withOpacity(0.5),
             ],
             begin: Alignment.topCenter,
@@ -76,7 +76,7 @@ class InsightsScreen extends StatelessWidget {
                             LinearProgressIndicator(
                               value: averageRating / 5,
                               backgroundColor: Colors.grey.shade300,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+                              valueColor: const AlwaysStoppedAnimation<Color>(Colors.deepPurple),
                             ),
                           ],
                         ),
