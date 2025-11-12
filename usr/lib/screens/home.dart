@@ -139,14 +139,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   void _showReflectionDialog(BuildContext context) {
-    final TextEditingController _controller = TextEditingController();
+    final TextEditingController controller = TextEditingController();
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Share how you feel'),
         content: TextField(
-          controller: _controller,
+          controller: controller,
           maxLines: 3,
           decoration: const InputDecoration(
             hintText: 'Type a sentence about your feelings...',
@@ -159,9 +159,9 @@ class HomeScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              if (_controller.text.trim().isNotEmpty) {
+              if (controller.text.trim().isNotEmpty) {
                 Navigator.pop(context);
-                _showAIResponse(context, _controller.text);
+                _showAIResponse(context, controller.text);
               }
             },
             child: const Text('Reflect'),
