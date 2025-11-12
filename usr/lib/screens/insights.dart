@@ -54,19 +54,25 @@ class InsightsScreen extends StatelessWidget {
       }
     });
 
-    // Calculate streak
+    // Calculate streak (consecutive days with at least one entry)
     int currentStreak = 0;
     if (entries.isNotEmpty) {
       final sortedEntries = List.from(entries)..sort((a, b) => b.date.compareTo(a.date));
-      DateTime checkDate = DateTime.now();
       
+      // Get unique dates with entries
+      final uniqueDates = <String>{};
       for (final entry in sortedEntries) {
-        final entryDate = DateTime(entry.date.year, entry.date.month, entry.date.day);
-        final compareDate = DateTime(checkDate.year, checkDate.month, checkDate.day);
-        
-        if (entryDate == compareDate || entryDate == compareDate.subtract(const Duration(days: 1))) {
+        final dateKey = '${entry.date.year}-${entry.date.month}-${entry.date.day}';
+        uniqueDates.add(dateKey);
+      }
+      
+      // Check for consecutive days starting from today
+      DateTime checkDate = DateTime.now();
+      while (true) {
+        final dateKey = '${checkDate.year}-${checkDate.month}-${checkDate.day}';
+        if (uniqueDates.contains(dateKey)) {
           currentStreak++;
-          checkDate = entry.date;
+          checkDate = checkDate.subtract(const Duration(days: 1));
         } else {
           break;
         }
@@ -121,8 +127,8 @@ class InsightsScreen extends StatelessWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: _buildStatCard(
-                            'Streak',
-                            '$currentStreak days',
+                            'Day Streak',
+                            '$currentStreak ${currentStreak == 1 ? "day" : "days"}',
                             Icons.local_fire_department,
                             Colors.orange,
                           ),
